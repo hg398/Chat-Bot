@@ -4,8 +4,15 @@
   "description": "Chat Bot",
   "main": "index.js",
   "scripts": {
+    "script": "node server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "engines": {
+    "node": "10.14.1"
+  },
   "author": "hg__",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.0"
+  }
 }
