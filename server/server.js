@@ -21,8 +21,9 @@ io.on('connection',(socket) => {
 	//message to all other users 
 	socket.broadcast.emit('newMessage',generateMessage('Admin','New User Joined'));
 
-	socket.on('createMessage', (message) => {
+	socket.on('createMessage', (message,callback) => {
 		io.emit('newMessage',generateMessage(message.from,message.text));
+		callback();
 		// socket.broadcast.emit('newMessage',{
 		// 	from: message.from,
 		// 	text: message.text,
@@ -34,9 +35,6 @@ io.on('connection',(socket) => {
 		console.log("Disconnected!");
 	});
 })
-// app.get("/",function(req,res){
-// 	res.render("index");
-// })
 
 server.listen(port,() => {
 	console.log("Running on port 3000!");
