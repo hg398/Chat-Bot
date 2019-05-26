@@ -1,5 +1,6 @@
 var socket=io();
 
+//function to scroll bottom
 function scrollToBottom() {
 	// selectors
 	var messages=$('#messages');
@@ -18,16 +19,41 @@ function scrollToBottom() {
 
 
 socket.on('connect',function(){
-	console.log("connected to server");
+	var params=jQuery.deparam(window.location.search);
+	socket.emit('join', params, function(err){
+		if(err){
+			alert(err);
+			window.location.href='/';
+		}else{
+			console.log("no error"); 
+		}
+	});
 });
 
+//disconnect a user
 socket.on('disconnect',function(){
 	console.log("Disconnected from server");
 });
 
+socket.on('updateUserList',function(users){
+	var ol = $('<ol></ol>');
+	users.forEach(function (user){
+		ol.append($('<li></li>').text(user));
+	});
+
+	$('#users').html(ol);
+});
+
+//new message render
 socket.on('newMessage',function(message){
 	var formattedTime=moment(message.createdAt).format('h:mm a');
-	var template=$('#message-template').html();
+	var template;
+	if(message.from === 'Admin'){
+		template=$('#admin-message-template').html();
+	}else{
+		template=$('#message-template').html();
+	}
+	
 	var view={
 		from: message.from,
 		text: message.text,
@@ -39,6 +65,7 @@ socket.on('newMessage',function(message){
 	scrollToBottom();
 });
 
+//new location message render
 socket.on('newLocationMessage', function(message){
 	var formattedTime=moment(message.createdAt).format('h:mm a');
 	var template=$('#location-message-template').html();
@@ -58,6 +85,7 @@ socket.on('newLocationMessage', function(message){
 	scrollToBottom();
 });
 
+//post message to chat
 $('#message-form').on('submit',function(e){
 	e.preventDefault();
 
@@ -71,6 +99,7 @@ $('#message-form').on('submit',function(e){
 	});
 });
 
+//post location message to chat
 var locationButton=$('#send-location');
 locationButton.on('click',function(){
 	if(!navigator.geolocation){

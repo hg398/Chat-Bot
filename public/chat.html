@@ -9,15 +9,18 @@
 
 	<body class="chat">
 
+		<!-- People Sidebar -->
 		<div class="chat__sidebar">
 			<h3>People</h3>
 			<div id="users"></div>
 		</div>
 
+		<!-- main chat -->
 		<div class="chat__main">
 			
 			<ol id="messages" class="chat__messages"></ol>
 
+			<!-- message input -->
 			<div class="chat__footer">
 				<form id="message-form">
 					<input type="text" name="message" placeholder="Message" autofocus autocomplete="off">
@@ -27,6 +30,7 @@
 			</div>
 		</div>
 
+		<!-- new message template -->
 		<script id="message-template" type="text/template">
 			<li class="message">
 				<div class="message__title">
@@ -39,6 +43,20 @@
 			</li>
 		</script>
 
+		<!-- new admin message template -->
+		<script id="admin-message-template" type="text/template">
+			<li class="message">
+				<div class="message__title">
+					<h4>{{from}}</h4>
+					<span>{{createdAt}}</span>
+				</div>
+				<div class="message__body">
+					<p><i>{{text}}</script></i></p>
+				</div>
+			</li>
+		</script>
+
+		<!-- new location message template -->
 		<script id="location-message-template" type="text/template">
 			<li class="message">
 				<div class="message__title">
@@ -57,6 +75,7 @@
 		<script type="text/javascript" src="/js/libs/jquery-3.4.1.min.js"></script>
 		<script type="text/javascript" src="/js/libs/moment.js"></script>
 		<script type="text/javascript" src="/js/libs/mustache.js"></script>
+		<script type="text/javascript" src="/js/libs/deparam.js"></script>
 		<script type="text/javascript" src="/js/chat.js"></script>
 	</body>
 </html>
